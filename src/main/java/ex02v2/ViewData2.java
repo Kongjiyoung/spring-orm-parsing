@@ -1,6 +1,6 @@
-package ex02;
+package ex02v2;
 
-import ex02.model.Reply;
+import ex02v2.model.Reply;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,8 +22,19 @@ public class ViewData2 {
         this.title = title;
         this.content = content;
     }
-
     public void addReply(Reply r) {
         replies.add(r);
+    }
+    public ViewData2(List<DBData2> dbList){
+        if (dbList.size()>0) {
+            this.boardId = dbList.get(0).getBoardId();
+            this.title = dbList.get(0).getTitle();
+            this.content = dbList.get(0).getContent();
+        }
+        for(DBData2 data : dbList){
+            Reply r = new Reply(data.getReplyId(), data.getComment());
+            addReply(r);
+        }
+
     }
 }
